@@ -55,13 +55,14 @@ def q7
 
   # 以下に回答を記載
   p array.map!(&:to_i)
+  # p array.map! {|x| x.to_i}
 end
 
 def q8
   programming_languages = %w(ruby php python javascript)
 
   # 以下に回答を記載
-  programming_languages.map {|lang| lang.capitalize}
+  programming_languages.map! {|lang| lang.capitalize}
   upper_case_programming_languages = programming_languages.map {|lang| lang.upcase}
 
   p programming_languages
@@ -79,12 +80,15 @@ end
 
 def q10
   foods = %w(いか たこ うに しゃけ うにぎり うに軍艦 うに丼)
+  # 配列のクォーテーションマーク省略 %W %w　文字列は％Q %q
 
   # 以下に回答を記載
-  if foods.include?("うに")
-    puts "好物です"
-  else
-    puts "まあまあ好きです"
+  foods.each do |food|
+    if food.include?("うに")
+      puts "好物です"
+    else
+      puts "まあまあ好きです"
+    end
   end
 end
 
@@ -110,16 +114,14 @@ def q13
   update_data = { age: 32, address: "沖縄" }
 
   # 以下に回答を記載
-  user_data [:age] = 32
-  user_data [:address] = "沖縄"
-  puts user_data
+  puts user_data.merge!(update_data)
 end
 
 def q14
   data = { name: "satou", age: 33, address: "saitama", hobby: "soccer", email: "hoge@fuga.com" }
 
   # 以下に回答を記載
-
+  p keys = data.keys
 end
 
 def q15
@@ -127,7 +129,16 @@ def q15
   data2 = { name: "yamada", hobby: "baseball", role: "normal" }
 
   # 以下に回答を記載
-
+  if data1.include?(:age)
+    puts "OK"
+  else
+    puts "NO"
+  end
+  if data2.include?(:age)
+    puts "OK"
+  else
+    puts "NO"
+  end
 end
 
 def q16
@@ -139,12 +150,23 @@ def q16
   ]
 
   # 以下に回答を記載
-
+  users.each do |user|
+    puts "私の名前は#{user[:name]}です。年齢は#{user[:age]}歳です。"
+  end
 end
 
 class UserQ17
   # 以下に回答を記載
+  def initialize(user)
+    @name = name
+    @age = age
+    @gender = gender
+    @admin = admin
+  end
 
+  def put_name
+    p @name
+  end
 end
 
 def q17
