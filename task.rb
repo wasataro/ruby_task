@@ -62,8 +62,8 @@ def q8
   programming_languages = %w(ruby php python javascript)
 
   # 以下に回答を記載
-  programming_languages.map! {|lang| lang.capitalize}
-  upper_case_programming_languages = programming_languages.map {|lang| lang.upcase}
+  programming_languages.map!(&:capitalize)
+  upper_case_programming_languages = programming_languages.map(&:upcase)
 
   p programming_languages
   p upper_case_programming_languages
@@ -129,16 +129,19 @@ def q15
   data2 = { name: "yamada", hobby: "baseball", role: "normal" }
 
   # 以下に回答を記載
-  if data1.include?(:age)
-    puts "OK"
-  else
-    puts "NO"
-  end
-  if data2.include?(:age)
-    puts "OK"
-  else
-    puts "NO"
-  end
+  puts data1.include?(:age) ? "OK" : "NG" #3項演算子:簡単なif文を短縮
+  puts data2.include?(:age) ? "OK" : "NG"
+
+#   if data1.include?(:age)
+#     puts "OK"
+#   else
+#     puts "NO"
+#   end
+#   if data2.include?(:age)
+#     puts "OK"
+#   else
+#     puts "NO"
+#   end
 end
 
 def q16
@@ -157,22 +160,27 @@ end
 
 class UserQ17
   # 以下に回答を記載
-  def initialize(user)
+  def initialize(name:, age:, gender:, admin:)
     @name = name
     @age = age
     @gender = gender
     @admin = admin
   end
 
-  def put_name
-    p @name
+  def info
+    puts <<~INFO
+      名前：#{@name}
+      年齢：#{@age}
+      性別：#{@gender}
+      管理者権限：#{@admin}
+    INFO
   end
 end
 
 def q17
   # ここは変更しないで下さい（ユーザー情報は変更していただいてOKです）
-  user1 = UserQ17.new(name: "神里", age: 32, gender: "男", admin: true)
-  user2 = UserQ17.new(name: "あじー", age: 32, gender: "男", admin: false)
+  user1 = UserQ17.new(name: "神里", age: 32, gender: "男", admin: "あり")
+  user2 = UserQ17.new(name: "あじー", age: 32, gender: "男", admin: "なし")
 
   user1.info
   puts "-------------"
@@ -181,7 +189,18 @@ end
 
 class UserQ18
   # 以下に回答を記載
+  def initialize(name:, age:)
+    @name = name
+    @age = age
+  end
 
+  def introduce
+    if @age > 16
+      "こんにちは,#{@name}と申します。宜しくお願いいたします。"
+    else
+      "はいさいまいど〜,#{@name}です!!!"
+    end
+  end
 end
 
 def q18
@@ -195,8 +214,8 @@ end
 
 class Item
   # 以下を修正して下さい
-
-  def initialize(name)
+  attr_reader :name
+  def initialize(name:)
     @name = name
   end
 end
@@ -221,6 +240,14 @@ end
 def q20
   # ここは変更しないで下さい（動物園・ユーザー情報は変更していただいてOKです）
   zoo = Zoo.new(name: "旭山動物園", entry_fee: { infant: 0, children: 400, adult: 800, senior: 500 })
+
+  def initialize()
+    @name = name
+    @infant = infant
+    @children = children
+    @adult = adult
+    @senior = senior
+  end
 
   users = [
     UserQ20.new(name: "たま", age: 3),
