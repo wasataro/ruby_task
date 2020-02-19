@@ -160,27 +160,28 @@ end
 
 class UserQ17
   # 以下に回答を記載
-  def initialize(name:, age:, gender:, admin:)
-    @name = name
-    @age = age
-    @gender = gender
-    @admin = admin
+  def initialize(**user)
+    @name = user[:name]
+    @age = user[:age]
+    @gender = user[:gender]
+    @admin = user[:admin]
   end
 
   def info
+    admin = @admin ? "あり" : "なし"
     puts <<~INFO
       名前：#{@name}
       年齢：#{@age}
       性別：#{@gender}
-      管理者権限：#{@admin}
+      管理者権限：#{admin}
     INFO
   end
 end
 
 def q17
   # ここは変更しないで下さい（ユーザー情報は変更していただいてOKです）
-  user1 = UserQ17.new(name: "神里", age: 32, gender: "男", admin: "あり")
-  user2 = UserQ17.new(name: "あじー", age: 32, gender: "男", admin: "なし")
+  user1 = UserQ17.new(name: "神里", age: 32, gender: "男", admin: true)
+  user2 = UserQ17.new(name: "あじー", age: 32, gender: "男", admin: false)
 
   user1.info
   puts "-------------"
@@ -228,26 +229,45 @@ end
 
 class UserQ20
   # 以下に回答を記載
+  attr_reader :name, :age
 
+  def initialize(**user)
+    @name = user[:name]
+    @age = user[:age]
+  end
 end
 
 class Zoo
   # 以下に回答を記載
+  def initialize(**people)
+    @name = people[:name]
+    @infant = people[:entry_fee][:infant]
+    @children = people[:entry_fee][:children]
+    @adult = people[:entry_fee][:adult]
+    @senior = people[:entry_fee][:senior]
+  end
 
+  def info_entry_fee(user)
+    fee =
+    case user.age
+    when 0..5
+      @infant
+    when 6..12
+      @children
+    when 13..64
+      @adult
+    when 65..120
+      @senior
+    end
+
+    puts "#{user.name}さんの入場料は#{fee}円です。"
+  end
 end
 
 
 def q20
   # ここは変更しないで下さい（動物園・ユーザー情報は変更していただいてOKです）
   zoo = Zoo.new(name: "旭山動物園", entry_fee: { infant: 0, children: 400, adult: 800, senior: 500 })
-
-  def initialize()
-    @name = name
-    @infant = infant
-    @children = children
-    @adult = adult
-    @senior = senior
-  end
 
   users = [
     UserQ20.new(name: "たま", age: 3),
